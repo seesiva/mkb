@@ -1,0 +1,275 @@
+---
+type: Proposal
+id: proposal_2026_07_26_01_api_modernization
+domain: Proposals
+title: Modernize Legacy API Architecture to Support Real-Time Data
+date: 2026-07-26
+status: draft
+created_at: 2026-07-26T00:00:00Z
+updated_at: 2026-07-26T00:00:00Z
+---
+
+# Executive Summary
+**Thesis:** Our legacy SOAP APIs are creating a bottleneck for real-time data integration. Modernizing to REST with event streaming will enable faster feature delivery and reduce operational burden.
+
+**Expected Business Impact:**
+- Reduce API integration time from 4 weeks to 1 week per new consumer
+- Enable real-time data flows (currently batch-only, 24-hour latency)
+- Reduce API-related production incidents by 40%
+- Estimated value: $2M annually in engineering efficiency + $500K in operational costs saved
+
+**Timeline:** 6 months from approval to full migration
+
+**Investment Required:** $800K (team), $150K (tools/infrastructure), $100K contingency
+
+---
+
+# Business Context
+
+## Problem Statement
+- **What:** Our 15-year-old SOAP API stack handles 80% of our integrations but is brittle, hard to extend, and requires 2-4 weeks per new consumer onboarding
+- **Why it matters:** We're losing enterprise deals because integration takes too long. Competitors can onboard them in days.
+- **Scope:** SOAP APIs only (not internal APIs, not mobile); 12 key consumers; batch and real-time data flows
+- **Current state:**
+  - 45 active SOAP endpoints
+  - 8-10 new consumer requests per quarter (70% take >3 weeks to integrate)
+  - 2-3 production incidents per month related to SOAP/XML parsing
+  - 5 FTE maintaining infrastructure
+
+## Stakeholders & Influencers
+- **Primary decision-maker:** VP Engineering (cares about delivery velocity, wants to reduce toil)
+- **Key stakeholders:** Enterprise Sales (wants faster onboarding), Product (wants real-time data), Operations (maintenance burden)
+- **Allies:** Principal Engineer (has been vocal about modernization), Platform team (wants to retire old stack)
+- **Resistors:** Legacy Systems Owner (concerned about stability), Finance (wants to see clear ROI before approving)
+- **Success criteria owner:** VP Engineering (tracks integration time, incident metrics)
+
+---
+
+# Proposed Solution
+
+## Architecture Overview
+Replace SOAP with REST + Event Streaming architecture. New integrations use REST APIs for synchronous calls and Kafka for real-time data. Legacy SOAP consumers get a bridge layer for 12 months of coexistence.
+
+## How It Works
+1. **Phase 1:** Deploy REST API gateway and event streaming infrastructure (Kafka)
+2. **Phase 2:** Build REST versions of top 5 SOAP endpoints; migrate 3 key consumers
+3. **Phase 3:** Migrate remaining 9 consumers from SOAP to REST
+4. **Phase 4:** Decommission SOAP stack; support bridge layer only
+5. **Phase 5:** Retire bridge layer (12 months after Phase 1)
+
+## Integration Points
+- Connects to 12 external systems (each needs migration plan)
+- Internal data warehouse depends on current batch flows (must maintain data SLAs)
+- Security team needs to validate REST auth model (OAuth 2.0)
+
+## Strategic Alignment
+- Aligns with "Modernize Legacy Systems" 2026 strategic priority
+- Enables "Real-Time Analytics" product roadmap for Q4 2026
+- Reduces tech debt and operational risk
+
+---
+
+# Trade-off Analysis
+
+| Aspect | REST + Kafka (Proposed) | Keep SOAP + Improve | Lift-and-Shift to gRPC |
+|--------|------------------------|-------------------|------------------------|
+| **Cost** | $1.05M | $200K | $1.2M |
+| **Timeline** | 6 months | 2 months (limited benefit) | 5 months |
+| **Consumer adoption** | Fast (REST is standard) | Medium (SOAP still friction) | Slow (gRPC not common) |
+| **Real-time capability** | Yes (Kafka) | No | No |
+| **Skills available** | Abundant (REST/Kafka common) | Declining (SOAP expertise aging) | Medium (gRPC emerging) |
+| **Why chosen** | Fastest path to business value; unblocks real-time product roadmap; lower risk (mainstream tech) | Doesn't solve real-time need; wastes money on dead tech | Higher risk; skills gap; doesn't align with industry direction |
+
+---
+
+# Risk & Mitigation
+
+| Risk | Likelihood | Impact | Mitigation | Owner | Target Date |
+|------|-----------|--------|-----------|-------|------------|
+| Consumer resistance to change | Medium | High | Early engagement with consumer teams; REST is industry standard so lower resistance expected | VP Engineering | Week 2 |
+| Data consistency during migration | Medium | High | Dual-write strategy for 6-month transition period; validation testing for each consumer | Platform Lead | Week 4 |
+| Kafka operational burden | Low | Medium | Hire Kafka specialist; adopt managed Kafka service (reduces ops burden) | Ops Lead | Week 3 |
+| Security team delays auth review | Low | High | Engage security in Week 1; use industry-standard OAuth 2.0 (not novel) | Security Lead | Week 1 |
+| Consumer discovery of new API | Medium | Medium | Publish API catalog; hold webinars; provide migration guide and support | Dev Advocate | Week 6 |
+
+---
+
+# Implementation Plan
+
+## Phase 1: Planning & Infrastructure (Weeks 1-8)
+- **Deliverables:** REST API design spec, Kafka infrastructure, OAuth 2.0 implementation, migration playbook for each consumer
+- **Dependencies:** Security team approval, infrastructure team capacity
+- **Owners:** Platform Lead (overall), Architect (design), Ops (infrastructure)
+- **Success criteria:** Design approved by security and key stakeholders; infrastructure running in staging
+
+## Phase 2: Build & Test REST APIs (Weeks 9-16)
+- **Deliverables:** REST versions of 5 top endpoints, test coverage, documentation
+- **Dependencies:** Phase 1 complete; consumer teams available for testing
+- **Owners:** 2 Backend engineers, QA
+- **Success criteria:** 3 pilot consumers successfully testing; REST API meets performance targets (p95 <100ms)
+
+## Phase 3: Migrate Pilot Consumers (Weeks 17-24)
+- **Deliverables:** 3 consumers migrated to REST; bridge layer operational
+- **Dependencies:** Phase 2 complete; pilot consumers committed to migration
+- **Owners:** Integration team, Platform team
+- **Success criteria:** All 3 pilots in production; zero data loss; integration time reduced to 1-2 weeks per consumer
+
+## Phase 4: Full Rollout (Weeks 25-28)
+- **Deliverables:** Remaining 9 consumers migrated; SOAP stack decommissioned
+- **Dependencies:** Phase 3 successful; all consumers trained
+- **Owners:** Platform team, Operations
+- **Success criteria:** 12/12 consumers migrated; SOAP stack removed from production
+
+---
+
+# Resource Requirements
+
+## Team Composition
+- **Architecture Lead:** 50% time (design, decisions, stakeholder alignment)
+- **Backend Engineers:** 2 FTE (implementation, testing)
+- **Platform/Infra:** 1 FTE (Kafka setup, bridge layer, ops)
+- **QA:** 0.5 FTE (test strategy, validation)
+- **Product/Advocacy:** 0.5 FTE (consumer communication, migration support)
+
+## Budget Breakdown
+- **Personnel:** $800K (6 months @ blended rate for team)
+- **Kafka infrastructure:** $80K (managed service, compute, storage)
+- **Tools/licenses:** $40K (API management platform, monitoring)
+- **Training/consulting:** $30K (external Kafka expert, OAuth specialist)
+- **Contingency (10%):** $95K
+- **Total:** $1.045M
+
+---
+
+# Success Metrics & Measurement
+
+## Primary Success Measures
+1. **Consumer Integration Time**
+   - Target: 1 week per new consumer (from 4 weeks)
+   - Baseline: 27 days average
+   - Measurement: Track from request to go-live, monthly
+   - Owner: VP Engineering
+   - Success threshold: 80% of new consumers integrated in ≤7 days by month 6
+
+2. **Real-Time Data Capability**
+   - Target: Enable sub-5-minute data latency
+   - Baseline: 24-hour batch latency
+   - Measurement: Data freshness in warehouse
+   - Owner: Analytics team
+   - Success threshold: Product can launch real-time dashboard by Q4 2026
+
+3. **Production Incidents**
+   - Target: ≤0.5 incidents per month (from 2-3 per month)
+   - Baseline: 2.5 incidents/month
+   - Measurement: Incident tracking system
+   - Owner: Operations
+   - Success threshold: Month 6-12 post-launch: <0.5 incidents/month
+
+4. **Consumer Adoption**
+   - Target: 100% of active consumers migrated
+   - Baseline: 0%
+   - Measurement: Consumer count on REST vs. SOAP
+   - Owner: Product team
+   - Success threshold: 12/12 consumers on REST by end of Phase 4
+
+---
+
+# Communication & Stakeholder Management
+
+## Approval Gates
+1. **Gate 1 (Week 1):** Executive sponsor approves investment and timeline
+2. **Gate 2 (Week 8):** Architecture and design approved by tech steering committee
+3. **Gate 3 (Week 16):** Pilot results accepted; greenlight for full rollout
+4. **Gate 4 (Week 28):** SOAP stack decommissioned; close-out
+
+## Communication Plan
+- **Week 0:** Executive stakeholder alignment (VP Eng, VP Sales, Finance)
+- **Week 1:** Announce to all consumer teams + Q&A session
+- **Week 8:** Share design and migration timeline
+- **Week 16:** Celebrate pilot wins; share learnings
+- **Week 28:** Retirement party for SOAP stack (yes, really — this builds goodwill)
+
+---
+
+# Learning & Introspection (Fill as work progresses)
+
+## Domain Knowledge Assessment
+**What domain knowledge is required for this proposal?**
+
+### Domain 1: API Architecture & Design
+- Required knowledge: REST best practices, versioning, rate limiting, error handling, security patterns
+- My baseline: Intermediate (I've designed REST APIs but not at this scale)
+- Gaps identified: OAuth 2.0 deep expertise (I know the basics), API gateway patterns, consumer discovery/registry
+- How this affected proposal: I recommended managed Kafka to avoid operational depth I lack
+- Resources to close gap: Will engage external consultant for OAuth 2.0 design; read "REST API Design" guidelines
+
+### Domain 2: Event Streaming Architecture
+- Required knowledge: Kafka architecture, partitioning, consumer groups, replication, monitoring
+- My baseline: Beginner (I understand concepts but haven't operated Kafka at scale)
+- Gaps identified: Kafka operational patterns, failure scenarios, tuning for our data volumes
+- How this affected proposal: I hired external Kafka specialist; de-scoped internal Kafka operations complexity
+- Resources to close gap: Kafka training course; hands-on setup with expert guidance
+
+### Domain 3: Migration Strategy
+- Required knowledge: Managing consumer transitions, backward compatibility, dual-write patterns, rollback scenarios
+- My baseline: Intermediate (experience with smaller migrations)
+- Gaps identified: Large-scale migration (12 consumers) with SLA guarantees; coordinating organizational change
+- How this affected proposal: I built in 6-month transition window (conservative); created phased approach with pilots
+- Resources to close gap: Will study case studies; use consultant to shape strategy
+
+---
+
+## What I Got Right
+- **Identified the real problem:** Integration bottleneck is costing us deals (not just tech debt)
+- **Chose mainstream tech:** REST + Kafka are standard, not risky bets
+- **Phased approach with pilots:** De-risks full rollout; allows learning before going all-in
+- **Quantified ROI:** Made business case clear ($2M value, not just "better architecture")
+- **Engaged right stakeholders early:** Had conversations with all key players before writing proposal
+
+---
+
+## What I Might Miss
+- **Consumer readiness:** Do 12 consumer teams have capacity to migrate? What if they don't?
+- **Performance assumptions:** Assumed REST + Kafka will meet performance targets; haven't stress-tested yet
+- **Organizational readiness:** Will my team embrace a new tech stack, or will there be resistance?
+- **Security implications:** OAuth 2.0 is standard but need to ensure compliance team is actually comfortable
+
+---
+
+## Where I Need to Improve
+- **Kafka expertise:** Need deeper knowledge before Phase 1; will do training + hire consultant
+- **Consumer management:** Haven't managed cross-org changes at this scale; need coaching on stakeholder coordination
+- **Risk communication:** Could have been more explicit about what we're de-scoping to stay in budget/timeline
+
+---
+
+## Stakeholder Feedback (After Proposal Presented)
+- **VP Engineering:** "Love the business case. Concerned about timeline with our current team capacity. Can we accelerate by hiring contractors?"
+- **Security team:** "OAuth 2.0 approach is fine. Need to see data classification and encryption strategy."
+- **Legacy Systems Owner:** "Worried about bridge layer complexity. What if it becomes a crutch and we never retire SOAP?"
+
+---
+
+# Decision & Next Steps
+
+## Recommendation
+**Approve this proposal and move to detailed planning (Phase 1).** The business case is clear ($2M value), the approach is phased and de-risked, and the team is ready to start. The main dependency is security review of OAuth design (1-week task).
+
+## Decision
+- **Decision-maker:** VP Engineering
+- **Decision date:** [Pending]
+- **Decision:** [To be filled after review]
+
+## If Approved - Next Actions
+| Action | Owner | Due Date | Evidence |
+|--------|-------|----------|----------|
+| Finance approves $1.045M budget | Finance Lead | 2026-08-02 | Purchase order signed |
+| Security reviews OAuth 2.0 design | Security Lead | 2026-08-09 | Security sign-off memo |
+| Phase 1 kickoff meeting | Platform Lead | 2026-08-12 | Team kickoff recorded |
+| Create detailed project plan | Architect | 2026-08-19 | Project template filled for Phase 1 |
+
+---
+
+**Last Updated:** 2026-07-26 (DRAFT)
+**Next Review:** 2026-08-02 (Executive decision)
+**Status:** ⏳ Awaiting decision

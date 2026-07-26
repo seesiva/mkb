@@ -121,34 +121,200 @@ Use this template for any new entry.
 - name: Outcome Traceability
 - detail: Every major learning should connect to an action or decision.
 
+# Templates & Guides
+
+## guides_01
+- name: Proposal Template
+- file: proposal_template.md
+- description: Comprehensive template for capturing proposals with business context, stakeholder analysis, trade-offs, risks, and learning/introspection sections
+- usage: Copy this template for each new proposal
+
+## guides_02
+- name: Project Template
+- file: project_template.md
+- description: Comprehensive template for executing projects with phases, team structure, success metrics, and learning/introspection sections
+- usage: Copy this template for each new project
+
+## guides_03
+- name: EA Templates Usage Guide
+- file: ea_templates_usage_guide.md
+- description: How to use proposal and project templates effectively as an enterprise architect, with section-by-section guidance and common mistakes
+
+## guides_04
+- name: Introspection & Learning Guide
+- file: introspection_and_learning_guide.md
+- description: How to capture domain knowledge, blind spots, failures, and skill gaps for continuous learning and pattern recognition
+
+---
+
+# Proposals Index
+
+Track all proposals here. Each proposal gets its own .okf file in `proposals/[YYYY-MM_topic]/`
+
+## Active Proposals (Waiting for Decision or In Planning)
+
+[To add: Create proposal entries with status, decision timeline, key stakeholders]
+
+## Approved Proposals (Ready to Become Projects)
+
+[To add: Approved proposals that have been greenlit]
+
+## Rejected/Deferred Proposals (Learning Archive)
+
+[To add: Track why they didn't move forward, what you learned, when to revisit]
+
+## Archived Proposals (Completed or Superseded)
+
+[To add: Proposals that were executed or are no longer relevant]
+
+---
+
+# Projects Index
+
+Track all projects here. Each project gets its own .okf file in `projects/[YYYY-MM_topic]/`
+
+## Planning & Active Projects
+
+| Project | Domain | Status | Owner | Target Launch | Last Updated |
+|---------|--------|--------|-------|----------------|--------------|
+| [Project 1] | [Domain] | planning/in-progress | [You] | [Date] | [Date] |
+
+## Completed Projects (With Retrospectives)
+
+| Project | Domain | Completion Date | Key Learning | Link |
+|---------|--------|-----------------|--------------|------|
+| [Project 1] | [Domain] | [Date] | [1-line summary] | [To retrospective] |
+
+## At-Risk / Blocked Projects
+
+| Project | Status | Blocker | Action | Owner | Target Resolution |
+|---------|--------|---------|--------|-------|-------------------|
+| [Project 1] | at-risk/blocked | [Issue] | [What's being done] | [Person] | [Date] |
+
+---
+
+# Learning Archive
+
+Quarterly and annual reflections on patterns, domain knowledge development, and growth
+
+## Q3 2026 Learnings
+- [To add: After quarter ends]
+
+## Q4 2026 Learnings
+- [To add: After quarter ends]
+
+## 2026 Annual Retrospective
+- [To add: End of year]
+
+---
+
+# How to Use This Knowledge Base
+
+## Creating a New Proposal
+1. Create folder: `knowledge/proposals/YYYY-MM_[topic-name]/`
+2. Copy `proposal_template.md` → rename to `proposal_[topic].okf`
+3. Fill out all sections (business context, solution, trade-offs, learning/introspection)
+4. Add entry to "Proposals Index" above with status and key info
+5. Link to related proposals/projects
+
+## Creating a New Project
+1. Create folder: `knowledge/projects/YYYY-MM_[topic-name]/`
+2. Copy `project_template.md` → rename to `project_[topic].okf`
+3. Link to the approved proposal that spawned this project
+4. Add entry to "Projects Index" above
+5. Update status weekly
+6. On completion, fill retrospective and move to "Completed Projects"
+
+## Weekly Discipline
+- Update active project statuses
+- Fill in "Learning & Introspection" sections during the week (not just at end)
+- Capture domain knowledge gaps and learnings real-time
+
+## Monthly Discipline
+- Review all active proposals/projects
+- Look for patterns in what's working/not working
+- Update learning archive
+
+## Quarterly Discipline
+- Deep review of all proposals and projects completed that quarter
+- Write quarterly learning summary
+- Identify skill development priorities for next quarter
+
+## Annual Discipline
+- Full retrospective on the year's proposals and projects
+- Capture biggest learnings about domain, organization, and yourself
+- Set focus areas for next year
+
+---
+
+# Quick Reference: File Structure
+
+```
+knowledge/
+├── personal_knowledge_base.okf          (THIS FILE - main index)
+├── proposal_template.md                 (template to copy for new proposals)
+├── project_template.md                  (template to copy for new projects)
+├── ea_templates_usage_guide.md          (how to use templates effectively)
+├── introspection_and_learning_guide.md  (how to learn from your work)
+│
+├── proposals/                           (all proposals organized by date/topic)
+│   ├── 2026-07_cloud_migration/
+│   │   └── proposal_cloud_migration.okf
+│   ├── 2026-08_api_gateway/
+│   │   └── proposal_api_gateway.okf
+│   └── [YYYY-MM_new-topic]/
+│       └── proposal_[topic].okf
+│
+├── projects/                            (all projects organized by date/topic)
+│   ├── 2026-07_cloud_migration/
+│   │   └── project_cloud_migration.okf
+│   ├── 2026-08_api_gateway/
+│   │   └── project_api_gateway.okf
+│   └── [YYYY-MM_new-topic]/
+│       └── project_[topic].okf
+│
+└── learnings/                           (quarterly & annual summaries)
+    ├── Q3_2026_learnings.md
+    ├── Q4_2026_learnings.md
+    └── 2026_annual_retrospective.md
+```
+
+---
+
 # Starter Backlog
 
 ## backlog_01
 - domain: Proposals
-- title: Standard proposal quality checklist
+- title: Capture your first proposal (choose something you're working on now)
 - priority: high
+- action: Create `proposals/2026-07_first-proposal/proposal_[topic].okf` using template
 
 ## backlog_02
-- domain: AI Adoption
-- title: Identify top 5 repetitive tasks for AI augmentation
+- domain: Projects
+- title: Capture your first active project (choose something in-progress now)
 - priority: high
+- action: Create `projects/2026-07_first-project/project_[topic].okf` using template
 
 ## backlog_03
-- domain: Soft Skills Learnings
-- title: Build feedback loop from meetings and retrospectives
-- priority: medium
+- domain: Learning
+- title: Do first weekly introspection (Friday, 30 min) - capture what went well, what you missed
+- priority: high
+- action: Fill "Learning & Introspection" sections in your active project
 
 ## backlog_04
-- domain: Projects
-- title: Create project scorecard template for status, risks, dependencies, and outcomes
-- priority: high
+- domain: Learning
+- title: Do first monthly review (last Friday of month) - identify patterns across proposals/projects
+- priority: medium
+- action: Review all entries, capture 3-5 patterns or insights
 
 ## backlog_05
-- domain: Skills Development and Improvement
-- title: Create a skills matrix with baseline, target level, and monthly improvement plan
-- priority: high
+- domain: Skills Development
+- title: Identify 3 domain knowledge gaps to prioritize for next quarter
+- priority: medium
+- action: After first 2-3 proposals/projects, analyze where you struggled with domain knowledge
 
 ## backlog_06
 - domain: Research
-- title: Create a research tracker template with question, method, evidence, and conclusion
-- priority: high
+- title: Quarterly learning review - write Q3 2026 learnings summary
+- priority: medium
+- action: At end of Q3, synthesize what you learned across all proposals/projects
