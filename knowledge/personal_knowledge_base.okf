@@ -1,0 +1,154 @@
+---
+type: KnowledgeBase
+title: Personal Evolving Knowledge Base
+description: Living personal OKF knowledge base for learnings, proposals, travel and meetings, playbooks, runbooks, delivery issues, soft skills, AI adoption, and planning.
+version: 1.0
+language: en
+tags:
+  - okf
+  - personal-knowledge
+  - learning
+  - planning
+  - ai-adoption
+  - runbook
+  - playbook
+created_at: 2026-07-26T00:00:00Z
+updated_at: 2026-07-26T00:00:00Z
+owner: Person
+source: ongoing-practice
+---
+
+# Purpose
+
+This knowledge base is designed to evolve over time through real work, reflection, and execution.
+
+# Domains
+
+## domain_01
+- name: Learnings
+- objective: Capture key lessons from work, experiments, and outcomes.
+- cadence: weekly
+
+## domain_02
+- name: Proposals
+- objective: Track proposal ideas, drafts, decisions, and outcomes.
+- cadence: per-proposal
+
+## domain_03
+- name: Travel and Meetings
+- objective: Record insights, commitments, follow-ups, and relationship context.
+- cadence: per-event
+
+## domain_04
+- name: Playbooks
+- objective: Document repeatable approaches for common scenarios.
+- cadence: monthly-review
+
+## domain_05
+- name: Runbooks
+- objective: Maintain operational steps for known tasks and incidents.
+- cadence: after-change
+
+## domain_06
+- name: Delivery Issues
+- objective: Record blockers, root causes, mitigations, and prevention actions.
+- cadence: per-issue
+
+## domain_07
+- name: Soft Skills Learnings
+- objective: Track communication, influence, collaboration, and feedback learnings.
+- cadence: biweekly
+
+## domain_08
+- name: AI Adoption
+- objective: Capture AI usage patterns, impact, risks, and adoption opportunities.
+- cadence: weekly
+
+## domain_09
+- name: Planning
+- objective: Keep goals, priorities, and execution plans aligned with outcomes.
+- cadence: weekly
+
+## domain_10
+- name: Projects
+- objective: Track project goals, milestones, risks, dependencies, outcomes, and retrospective learnings.
+- cadence: weekly
+
+## domain_11
+- name: Skills Development and Improvement
+- objective: Add new skills, improve existing skills, and track progression through practice and feedback.
+- cadence: weekly
+
+## domain_12
+- name: Research
+- objective: Capture research questions, findings, references, experiments, and implications for decisions.
+- cadence: weekly
+
+# Entry Template
+
+Use this template for any new entry.
+
+## entry_template
+- id: entry_yyyy_mm_dd_xx
+- domain: one-of-domains
+- title: short-title
+- date: YYYY-MM-DD
+- context: what happened
+- decision_or_learning: core insight or decision
+- action_items:
+  - owner: Person
+    action: clear next step
+    due_date: YYYY-MM-DD
+- status: open|in-progress|done
+- evidence_links:
+  - optional-reference
+
+# Evolution Rules
+
+## rule_01
+- name: Add Before Memory Fades
+- detail: Add notes within 24 hours of significant events.
+
+## rule_02
+- name: Weekly Consolidation
+- detail: Consolidate raw notes into clear insights every week.
+
+## rule_03
+- name: Monthly Pruning
+- detail: Archive stale content and keep active guidance concise.
+
+## rule_04
+- name: Outcome Traceability
+- detail: Every major learning should connect to an action or decision.
+
+# Starter Backlog
+
+## backlog_01
+- domain: Proposals
+- title: Standard proposal quality checklist
+- priority: high
+
+## backlog_02
+- domain: AI Adoption
+- title: Identify top 5 repetitive tasks for AI augmentation
+- priority: high
+
+## backlog_03
+- domain: Soft Skills Learnings
+- title: Build feedback loop from meetings and retrospectives
+- priority: medium
+
+## backlog_04
+- domain: Projects
+- title: Create project scorecard template for status, risks, dependencies, and outcomes
+- priority: high
+
+## backlog_05
+- domain: Skills Development and Improvement
+- title: Create a skills matrix with baseline, target level, and monthly improvement plan
+- priority: high
+
+## backlog_06
+- domain: Research
+- title: Create a research tracker template with question, method, evidence, and conclusion
+- priority: high

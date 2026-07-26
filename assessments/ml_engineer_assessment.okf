@@ -1,0 +1,45 @@
+---
+type: Assessment
+title: ML Engineer Digital Twin Technical Assessment
+description: Structured OKF document for the Machine Learning Engineer (Digital Twin) technical assessment.
+version: 1.0
+language: en
+tags:
+  - assessment
+  - machine-learning
+  - digital-twin
+  - hiring
+  - python
+  - software-engineering
+created_at: 2025-01-30T00:00:00Z
+updated_at: 2026-07-26T00:00:00Z
+source: manual-curation
+---
+
+# Overview
+
+## summary
+- type: Article
+- title: ML Engineer Digital Twin Technical Assessment Overview
+- description: High-level summary of the technical assessment structure for the Machine Learning Engineer (Digital Twin) role.
+- tags:
+  - assessment
+  - machine-learning
+  - digital-twin
+  - hiring
+  - overview
+- timestamp: 2025-01-30T00:00:00Z
+
+# Sections
+
+## section_01
+- type: Runbook
+- title: Assessment Section 1 Python and Software Engineering Fundamentals
+- description: Tasks and evaluation criteria for assessing production-grade Python coding and feature pipeline design.
+- tags:
+  - assessment
+  - python
+  - feature-pipeline
+  - software-engineering
+  - machine-learning
+- timestamp: 2025-01-30T00:00:00Z
