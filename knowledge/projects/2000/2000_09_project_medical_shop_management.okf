@@ -1,0 +1,426 @@
+---
+type: Project
+id: 2000_09_project_medical_shop_management
+domain: Projects
+title: Medical Shop Management
+date: 2000-09-26
+status: Delivered
+updated: 2000-09-01
+related_proposal: None
+---
+
+# Project Overview
+
+## Project Summary
+- **Objective:** Built a medical shop management software for billing and inventory.
+- **Strategic alignment:** Supports "Modernize Legacy Systems" 2026 priority; enables "Real-Time Analytics" product roadmap
+- **Success criteria:**
+  1. All 12 consumers migrated to REST (zero on SOAP by month 6)
+  2. Integration time reduced to ≤7 days for new consumers
+  3. Production incidents reduced from 2-3/month to <0.5/month
+  4. Real-time data flows operational (sub-5-min latency)
+- **Project lead:** [Your name], Platform Architecture Lead
+- **Sponsor/Executive owner:** VP Engineering
+
+## Key Dates
+| Milestone | Planned | Status |
+|-----------|---------|--------|
+| Kickoff | 2026-08-12 | Planning |
+| Phase 1 complete (Infrastructure) | 2026-10-07 | |
+| Phase 2 complete (Build REST APIs) | 2026-11-18 | |
+| Phase 3 complete (Pilot migration) | 2026-12-30 | |
+| Phase 4 complete (Full rollout) | 2027-01-27 | |
+| Closure (Bridge layer only) | 2027-01-27 | |
+
+---
+
+# Scope & Context
+
+## What's In Scope
+- Migrate 12 external SOAP API consumers to REST
+- Deploy Kafka event streaming infrastructure
+- Build REST API gateway with OAuth 2.0
+- Create bridge layer for 12-month coexistence
+- Document all APIs and migration processes
+- Train all consumer teams
+
+## What's Out of Scope
+- Internal APIs (those are separate modernization effort)
+- Mobile API changes
+- Analytics pipeline rewrite (uses new APIs but owned by Analytics team)
+- SOAP stack cleanup beyond decommissioning (can be future work)
+
+## Assumptions
+- All 12 consumers will have capacity to migrate (if not, will extend timeline)
+- Kafka managed service will be sufficient (not self-managed)
+- OAuth 2.0 will be approved by security (confirmed in proposal review)
+- No breaking changes to data contracts (we maintain compatibility)
+- External vendors will cooperate (most have REST SDK available)
+
+---
+
+# Team Structure & Accountability
+
+## Core Team
+| Role | Name | Organization | % Allocation | Key Responsibilities |
+|------|------|--------------|--------------|---------------------|
+| Project Lead | [Your name] | Platform | 60% | Delivery, stakeholder alignment, risk management |
+| Technical Architect | [Senior engineer] | Platform | 100% | API design, integration strategy, quality gates |
+| Backend Engineer 1 | [Engineer A] | Platform | 100% | REST API implementation, testing |
+| Backend Engineer 2 | [Engineer B] | Platform | 100% | REST API implementation, bridge layer |
+| Infrastructure Lead | [Infra engineer] | Operations | 80% | Kafka setup, monitoring, operations |
+| QA Lead | [QA engineer] | Quality | 50% | Test strategy, consumer validation |
+| Product/Developer Advocate | [Advocate] | Product | 50% | Consumer communication, migration support |
+
+## Decision Rights
+- **Project-level decisions:** Project lead (with sponsor approval for scope/timeline changes)
+- **Technical decisions:** Technical architect (with project lead approval for scope impact)
+- **Consumer questions:** Developer advocate (with technical architect for technical issues)
+- **Risk escalation threshold:** Any issue affecting timeline/budget >1 week or >$50K escalates to sponsor
+
+---
+
+# Project Phases & Execution Plan
+
+## Phase 1: Planning & Infrastructure Setup (Weeks 1-8 | Aug 12 - Oct 7)
+
+### Work Stream 1: REST API Design & Standards
+- **Deliverables:**
+  - REST API design guidelines (versioning, naming, error handling)
+  - OAuth 2.0 implementation spec
+  - API security architecture document
+- **Owner:** Technical Architect
+- **Dependencies:** Security team approval of OAuth spec (from proposal review)
+- **Success criteria:**
+  - Design document reviewed and approved by tech steering committee
+  - Security team sign-off on OAuth implementation
+  - All consumer teams can review and provide feedback
+
+### Work Stream 2: Kafka Infrastructure
+- **Deliverables:**
+  - Kafka cluster deployed (staging + production)
+  - Event schema registry setup
+  - Monitoring and alerting configured
+  - Disaster recovery plan documented
+- **Owner:** Infrastructure Lead
+- **Dependencies:** Cloud infrastructure provisioned; Kafka expert consultant available
+- **Success criteria:**
+  - Kafka cluster handles 2x production load in staging
+  - All monitoring dashboards operational
+  - DR testing successful (can restore from backup)
+
+### Work Stream 3: Bridge Layer Architecture
+- **Deliverables:**
+  - Bridge layer design (how SOAP calls route to REST internally)
+  - Dual-write strategy documented
+  - Rollback plan for each consumer
+- **Owner:** Technical Architect + Backend engineers
+- **Dependencies:** REST API design finalized
+- **Success criteria:**
+  - Design allows zero-downtime transition for each consumer
+  - Team can explain dual-write guarantees
+
+### Work Stream 4: Migration Playbook & Consumer Communication
+- **Deliverables:**
+  - Playbook for each consumer type (cloud, on-prem, hybrid)
+  - FAQ document
+  - Webinar for all consumer teams
+  - Migration timeline per consumer
+- **Owner:** Developer Advocate + Project Lead
+- **Dependencies:** REST API design finalized; list of consumers confirmed
+- **Success criteria:**
+  - Each consumer team has clear migration path
+  - Adoption feedback positive (NPS of migrate playbook >7)
+
+### Phase Gate
+- **Gate criteria:**
+  - ✅ API design approved
+  - ✅ Kafka infrastructure operational
+  - ✅ Bridge layer design validated
+  - ✅ All consumer teams have migration playbook + timeline
+- **Gate approver:** VP Engineering
+- **Target gate date:** 2026-10-07
+
+---
+
+## Phase 2: Build & Test REST APIs (Weeks 9-16 | Oct 8 - Nov 18)
+
+### Work Stream 1: Implement REST APIs
+- **Deliverables:**
+  - REST versions of top 5 SOAP endpoints
+  - API documentation (Swagger/OpenAPI)
+  - Code committed to main branch with feature flags
+- **Owner:** Backend Engineers (both)
+- **Dependencies:** Phase 1 gate complete; API design finalized
+- **Success criteria:**
+  - Code review: 2 approvals minimum
+  - Test coverage: >80% for all new code
+  - Documentation: Each endpoint has examples and error cases
+
+### Work Stream 2: Performance & Load Testing
+- **Deliverables:**
+  - Load test results (peak load = 2x production)
+  - Performance tuning applied
+  - Baseline metrics documented
+- **Owner:** QA Lead + Backend engineers
+- **Dependencies:** REST API implementation complete
+- **Success criteria:**
+  - p50 latency: <50ms, p95: <100ms, p99: <200ms
+  - Can handle 2x production load without degradation
+  - All metrics meet SLA requirements
+
+### Work Stream 3: Security Testing
+- **Deliverables:**
+  - OAuth 2.0 flow validation
+  - Security scan results (no critical findings)
+  - Penetration test report (if required by security team)
+- **Owner:** Security team (external); coordination by Technical Architect
+- **Dependencies:** REST API implementation complete
+- **Success criteria:**
+  - Security sign-off received
+  - No critical or high vulnerabilities
+
+### Phase Gate
+- **Gate criteria:**
+  - ✅ 3 pilot consumers ready to test
+  - ✅ Performance targets met
+  - ✅ Security sign-off received
+  - ✅ Documentation complete
+- **Gate approver:** VP Engineering
+- **Target gate date:** 2026-11-18
+
+---
+
+## Phase 3: Pilot Migration (Weeks 17-24 | Nov 19 - Dec 30)
+
+### Work Stream 1: Migrate Pilot Consumers (3 customers)
+- **Deliverables:**
+  - Consumer A: Migrated to REST, bridge layer active, zero data loss
+  - Consumer B: Migrated to REST, bridge layer active, zero data loss
+  - Consumer C: Migrated to REST, bridge layer active, zero data loss
+- **Owner:** Backend engineers + Integration lead
+- **Dependencies:** Phase 2 gate complete; pilot consumers committed
+- **Success criteria:**
+  - All 3 consumers successfully sending/receiving via REST
+  - Data validation: 100% data parity between old/new paths
+  - Integration time: 1-2 weeks per consumer (from 4 weeks)
+
+### Work Stream 2: Monitor & Tune
+- **Deliverables:**
+  - Weekly status reports to pilot consumers
+  - Performance tuning applied based on real data
+  - Incident response (if any)
+- **Owner:** Infrastructure Lead + Backend engineers
+- **Dependencies:** Pilot consumers live
+- **Success criteria:**
+  - Zero data loss incidents
+  - <1 incident per consumer over 4 weeks
+  - Performance meets targets
+
+### Work Stream 3: Gather Feedback & Iterate
+- **Deliverables:**
+  - Feedback from 3 pilot consumers documented
+  - Playbook updated based on learnings
+  - Known issues and workarounds documented
+- **Owner:** Developer Advocate
+- **Dependencies:** Pilot consumers live for 2+ weeks
+- **Success criteria:**
+  - Playbook improved based on feedback
+  - Next wave of consumers has higher confidence
+
+### Phase Gate
+- **Gate criteria:**
+  - ✅ All 3 pilots successful (zero data loss, meets SLAs)
+  - ✅ Integration time reduced to 1-2 weeks per consumer
+  - ✅ Playbook updated; team confident in next wave
+  - ✅ No critical issues remaining
+- **Gate approver:** VP Engineering
+- **Target gate date:** 2026-12-30
+
+---
+
+## Phase 4: Full Rollout & Decommission (Weeks 25-28 | Jan 1 - Jan 27, 2027)
+
+### Work Stream 1: Migrate Remaining Consumers (9 customers)
+- **Deliverables:**
+  - 9 remaining consumers migrated to REST (one per week)
+  - Bridge layer supporting all consumers
+- **Owner:** Integration team
+- **Dependencies:** Phase 3 complete; playbook proven
+- **Success criteria:**
+  - 12/12 consumers now on REST API
+  - Zero unplanned downtime during migrations
+
+### Work Stream 2: Decommission SOAP Stack
+- **Deliverables:**
+  - SOAP endpoints removed from production
+  - Infrastructure decommissioned
+  - Documentation archived
+- **Owner:** Infrastructure Lead
+- **Dependencies:** All consumers migrated
+- **Success criteria:**
+  - No traffic to SOAP endpoints
+  - Infrastructure costs reduced (~$150K annually)
+
+### Phase Gate
+- **Gate criteria:**
+  - ✅ All 12 consumers on REST
+  - ✅ SOAP decommissioned
+  - ✅ Savings realized
+- **Gate approver:** VP Engineering
+- **Target gate date:** 2027-01-27
+
+---
+
+# Resources & Budget
+
+## Resource Plan
+- **Total team:** 5.8 FTE (+ 0.3 FTE external Kafka consultant for Phase 1)
+- **Duration:** 28 weeks (6.5 months)
+- **Key dependencies:** Security team availability for reviews; consumer team capacity
+- **Contingency headcount:** 0.5 FTE (available for unexpected complexity)
+
+## Budget Tracking
+- **Monthly burn rate:** ~$160K (Personnel: $130K, Infrastructure: $30K)
+- **Forecast to complete:** $1.045M (original estimate)
+- **Variance threshold:** ±10% ($104K) — triggers review at Finance
+
+---
+
+# Quality, Testing & Acceptance
+
+## Quality Standards
+- **Code quality:** SonarQube: Technical debt ratio <5%
+- **Test coverage:** >80% for all new code
+- **Performance:** p95 latency <100ms; p99 <200ms
+- **Security:** Zero critical findings from security scan
+
+## Testing Strategy
+- **Unit tests:** Every API endpoint and business logic
+- **Integration tests:** REST API to database and message queue
+- **UAT:** 3 pilot consumers validate functionality
+- **Performance testing:** Load test at 2x production volume
+- **Security testing:** OAuth flow validation + penetration test
+
+## Acceptance Criteria
+- **Technical:** All REST APIs meet performance/security targets
+- **Consumer:** 3+ pilot consumers in production with zero data loss
+- **Operational:** Monitoring/alerting fully operational
+- **Business:** Integration time reduced to ≤7 days for new consumers
+
+---
+
+# Current Status (Update Weekly)
+
+## Week 1 Status (2026-08-12)
+**Overall status:** 🟢 Green (on track)
+
+**Summary:** Project kickoff successful. Team assembled. Phase 1 planning underway.
+
+**Key metrics:**
+- Timeline variance: On track
+- Budget variance: Neutral (not spent yet)
+- Risk/issue count: 0 open, 0 at-risk
+
+**Completed this week:**
+- Team kickoff meeting held
+- Project charter approved
+- Work streams defined
+
+**In progress:**
+- REST API design review
+- Kafka infrastructure planning
+- Consumer communication planning
+
+**Blocked/at-risk:**
+- None at this stage
+
+**Next week's focus:**
+- Complete API design draft
+- Security team OAuth review starts
+- First consumer webinar
+
+---
+
+# Learning & Introspection (Capture Throughout Project)
+
+## Domain Knowledge Needed for This Project
+
+### Domain 1: API Architecture & Design (REST/OpenAPI)
+- **Required:** REST best practices, versioning strategy, error handling patterns, API security
+- **Baseline:** Intermediate (I've designed REST APIs but smaller scale)
+- **Gap discovered:** Will surface as we build; expecting to learn about scaling REST to 12+ consumers with different requirements
+- **How I'm filling it:** Working with senior architect; reading OpenAPI 3.0 spec; consulting with API community best practices
+
+### Domain 2: Event Streaming (Kafka)
+- **Required:** Kafka architecture, partitioning strategy, consumer groups, error handling, monitoring
+- **Baseline:** Beginner (theoretical knowledge only)
+- **Gap discovered:** Already discovering gaps in operational patterns; hired external consultant to accelerate learning
+- **How I'm filling it:** Consultant training; hands-on Kafka setup; reading case studies from companies at our scale
+
+### Domain 3: Consumer Management & Large-Scale Migration
+- **Required:** Coordinating across 12 teams; managing interdependencies; handling different adoption speeds; organizational change management
+- **Baseline:** Intermediate (done smaller migrations)
+- **Gap discovered:** Scale is new for me; expecting to learn about change fatigue, coordination complexity, stakeholder alignment at scale
+- **How I'm filling it:** Weekly sync with all consumer leads; retrospectives after each phase; coaching from VP Engineering
+
+---
+
+## What Went Well & Why
+[To be filled weekly as project progresses]
+
+---
+
+## What You Missed
+[To be filled weekly as project progresses]
+
+---
+
+## Where You Failed or Made Mistakes
+[To be filled weekly as project progresses]
+
+---
+
+## Where You Need to Improve
+[To be filled weekly as project progresses]
+
+---
+
+## Stakeholder & Team Feedback
+[To be gathered throughout project]
+
+---
+
+## Knowledge Gained — What Will You Carry Forward?
+[To be filled after project completes]
+
+---
+
+# Retrospective (Fill after project closure)
+
+## Execution Assessment
+| Dimension | Planned | Actual | Variance | Notes |
+|-----------|---------|--------|----------|-------|
+| Timeline | 28 weeks | | | |
+| Budget | $1.045M | | | |
+| Scope | 12 consumers migrated | | | |
+| Quality | >80% test coverage | | | |
+| Adoption | 100% consumer migration | | | |
+
+## What Went Well
+[To be filled at project closure]
+
+## What We'd Do Differently
+[To be filled at project closure]
+
+## Technical Debt Created
+[To be filled at project closure]
+
+## Knowledge Transfer & Legacy
+[To be filled at project closure]
+
+---
+
+**Last Updated:** 2026-07-26 (Planning phase)
+**Next Status Update:** 2026-08-19
+**Project Health:** 🟢 On track (planning)
